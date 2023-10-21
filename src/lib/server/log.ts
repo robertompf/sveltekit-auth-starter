@@ -65,6 +65,7 @@ export default async function log(statusCode: number, event) {
 		});
 		await client.ingestEvents(AXIOM_DATASET, [logData]);
 	} catch (err) {
+		console.log(err);
 		throw new Error(`Error Logger: ${JSON.stringify(err)}`);
 	}
 }

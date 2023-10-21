@@ -1,27 +1,27 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 datasource db {
-    provider = "postgresql"
-    url      = env("PRISMA_URL")
+  provider = "postgresql"
+  url      = env("PRISMA_URL")
 }
 
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 model AuthUser {
-    id            String        @id @unique
-    email         String        @unique
-    firstName     String
-    lastName      String
-    role          Role          @default(USER)
-    verified      Boolean       @default(false)
-    receiveEmail  Boolean       @default(true)
-    token         String?    @unique
-    createdAt      DateTime          @default(now()) @db.Timestamp(6)
-    updatedAt       DateTime        @updatedAt @db.Timestamp(6)
-    auth_session  AuthSession[]
-    auth_key      AuthKey[]
+  id           String        @id @unique
+  email        String        @unique
+  firstName    String
+  lastName     String
+  role         Role          @default(USER)
+  verified     Boolean       @default(false)
+  receiveEmail Boolean       @default(true)
+  token        String?       @unique
+  createdAt    DateTime      @default(now()) @db.Timestamp(6)
+  updatedAt    DateTime      @updatedAt @db.Timestamp(6)
+  auth_session AuthSession[]
+  auth_key     AuthKey[]
 
   @@map("auth_user")
 }
@@ -53,4 +53,108 @@ enum Role {
   USER
   PREMIUM
   ADMIN
+}
+
+// Table for Companies
+model Empresa {
+  id                   Int                    @id @default(autoincrement())
+  nome                 String
+  endereco             String?
+  moedaPadrao          String
+  idiomaPadrao         String
+  UnidadeMedida        UnidadeMedida[]
+  CategoriaIngrediente CategoriaIngrediente[]
+  Ingrediente          Ingrediente[]
+  CategoriaReceita     CategoriaReceita[]
+  PorcaoReceita        PorcaoReceita[]
+  Receita              Receita[]
+  AuditoriaLog         AuditoriaLog[]
+  APIIntegracao        APIIntegracao[]
+}
+
+// Table for Units of Measure
+model UnidadeMedida {
+  id          Int           @id @default(autoincrement())
+  nome        String
+  abreviacao  String
+  isFluido    Boolean
+  empresa     Empresa       @relation(fields: [empresaId], references: [id])
+  empresaId   Int
+  Ingrediente Ingrediente[]
+  Receita     Receita[]
+}
+
+// Table for Ingredient Categories
+model CategoriaIngrediente {
+  id          Int           @id @default(autoincrement())
+  nome        String
+  empresa     Empresa       @relation(fields: [empresaId], references: [id])
+  empresaId   Int
+  Ingrediente Ingrediente[]
+}
+
+// Table for Ingredients
+model Ingrediente {
+  id                   Int                  @id @default(autoincrement())
+  nome                 String
+  unidadeCompraId      Int
+  custo                Float
+  aproveitamento       Float
+  categoriaId          Int
+  empresaId            Int
+  UnidadeMedida        UnidadeMedida        @relation(fields: [unidadeCompraId], references: [id])
+  CategoriaIngrediente CategoriaIngrediente @relation(fields: [categoriaId], references: [id])
+  empresa              Empresa              @relation(fields: [empresaId], references: [id])
+}
+
+// Table for Recipe Categories
+model CategoriaReceita {
+  id        Int       @id @default(autoincrement())
+  nome      String
+  empresa   Empresa   @relation(fields: [empresaId], references: [id])
+  empresaId Int
+  Receita   Receita[]
+}
+
+// Table for Portions
+model PorcaoReceita {
+  id         Int     @id @default(autoincrement())
+  nome       String
+  quantidade Float
+  empresa    Empresa @relation(fields: [empresaId], references: [id])
+  empresaId  Int
+}
+
+// Table for Recipes
+model Receita {
+  id               Int              @id @default(autoincrement())
+  nome             String
+  metodoPreparo    String
+  categoriaId      Int
+  rendimento       Float
+  unidadeId        Int
+  empresaId        Int
+  UnidadeMedida    UnidadeMedida    @relation(fields: [unidadeId], references: [id])
+  CategoriaReceita CategoriaReceita @relation(fields: [categoriaId], references: [id])
+  empresa          Empresa          @relation(fields: [empresaId], references: [id])
+}
+
+// Table for Audits and Logs
+model AuditoriaLog {
+  id              Int      @id @default(autoincrement())
+  acao            String
+  tabelaAfetada   String
+  registroAfetado Int
+  data            DateTime @default(now())
+  empresa         Empresa  @relation(fields: [empresaId], references: [id])
+  empresaId       Int
+}
+
+// Table for APIs and Integrations
+model APIIntegracao {
+  id        Int     @id @default(autoincrement())
+  nomeAPI   String
+  chaveAPI  String
+  empresa   Empresa @relation(fields: [empresaId], references: [id])
+  empresaId Int
 }
