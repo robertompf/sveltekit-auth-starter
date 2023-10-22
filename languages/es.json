@@ -13,6 +13,7 @@
   "profile": "Perfil",
   "home": "Inicio",
   "protected": "Protegido",
+  "ingredients": "Ingredientes",
   "auth": {
     "password": {
       "reset": {

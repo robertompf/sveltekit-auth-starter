@@ -1,6 +1,7 @@
 import { dev } from '$app/environment';
-export const BASE_URL = dev ? 'http://localhost:5173' : 'https://sveltekit-auth.uv-ray.com';
+export const BASE_URL = dev ? 'http://localhost:5173' : 'http://192.168.0.123:5173/';
 export const APP_NAME = 'Secret Project';
+export const COMPANY_NAME = 'OwnNet Labs';
 export const CONTACT_EMAIL = 'my@own.net.br';
 export const DOMAIN = 'secret.own.net.br';
 /* WARNING!!! TERMS AND CONDITIONS AND PRIVACY POLICY 

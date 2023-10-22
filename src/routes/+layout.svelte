@@ -64,7 +64,7 @@
 		<Navigation user={data.user} />
 	</svelte:fragment>
 	<!-- Main Content -->
-	<div class="container lg:p-10 mx-auto">
+	<div class="container lg:p-2 mx-auto">
 		<slot />
 	</div>
 	<svelte:fragment slot="pageFooter"><Footer /></svelte:fragment>

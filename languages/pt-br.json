@@ -1,4 +1,4 @@
-  {
+{
   "signin": "Entrar",
   "signinProblem": "Sign In Problem",
   "signup": "Cadastrar",
@@ -14,6 +14,7 @@
   "profile": "Perfil",
   "home": "Home",
   "protected": "Protected",
+  "ingredients": "Ingredientes",
   "auth": {
     "password": {
       "reset": {

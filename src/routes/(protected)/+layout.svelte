@@ -1,16 +1,19 @@
 <script lang="ts">
-	import Logo from '$lib/components/logo.svelte';
+	// import Logo from '$lib/components/logo.svelte';
+	import { APP_NAME } from '$lib/config/constants';
 </script>
 
-<div class="flex flex-col justify-center px-6 py-12 lg:px-8 mx-auto max-w-2xl">
+<svelte:head>
+	<title>{APP_NAME}</title>
+	<meta
+		name="description"
+		content="{APP_NAME} - An open source recipe stuff."
+	/>
+</svelte:head>
+
+<div class="flex flex-col justify-center px-2 py-2 lg:px-2 mx-auto">
 	<div class="card p-6 pb-8 pt-8">
 		<div>
-			<div class="flex flex-row justify-center items-center mb-4">
-				<div>
-					<Logo size="42" />
-				</div>
-			</div>
-
 			<slot />
 		</div>
 	</div>

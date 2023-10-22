@@ -60,8 +60,8 @@ model Empresa {
   id                   Int                    @id @default(autoincrement())
   nome                 String
   endereco             String?
-  moedaPadrao          String
-  idiomaPadrao         String
+  moedaPadrao          String?
+  idiomaPadrao         String?
   UnidadeMedida        UnidadeMedida[]
   CategoriaIngrediente CategoriaIngrediente[]
   Ingrediente          Ingrediente[]
@@ -77,9 +77,9 @@ model UnidadeMedida {
   id          Int           @id @default(autoincrement())
   nome        String
   abreviacao  String
-  isFluido    Boolean
-  empresa     Empresa       @relation(fields: [empresaId], references: [id])
-  empresaId   Int
+  isFluido    Boolean      @default(false)
+  empresa     Empresa?       @relation(fields: [empresaId], references: [id])
+  empresaId   Int?
   Ingrediente Ingrediente[]
   Receita     Receita[]
 }
@@ -88,7 +88,7 @@ model UnidadeMedida {
 model CategoriaIngrediente {
   id          Int           @id @default(autoincrement())
   nome        String
-  empresa     Empresa       @relation(fields: [empresaId], references: [id])
+  empresa     Empresa?       @relation(fields: [empresaId], references: [id])
   empresaId   Int
   Ingrediente Ingrediente[]
 }
@@ -98,21 +98,21 @@ model Ingrediente {
   id                   Int                  @id @default(autoincrement())
   nome                 String
   unidadeCompraId      Int
-  custo                Float
-  aproveitamento       Float
-  categoriaId          Int
-  empresaId            Int
+  custo                Float?
+  aproveitamento       Float?
+  categoriaId          Int?
+  empresaId            Int?
   UnidadeMedida        UnidadeMedida        @relation(fields: [unidadeCompraId], references: [id])
-  CategoriaIngrediente CategoriaIngrediente @relation(fields: [categoriaId], references: [id])
-  empresa              Empresa              @relation(fields: [empresaId], references: [id])
+  CategoriaIngrediente CategoriaIngrediente? @relation(fields: [categoriaId], references: [id])
+  empresa              Empresa?              @relation(fields: [empresaId], references: [id])
 }
 
 // Table for Recipe Categories
 model CategoriaReceita {
   id        Int       @id @default(autoincrement())
   nome      String
-  empresa   Empresa   @relation(fields: [empresaId], references: [id])
-  empresaId Int
+  empresa   Empresa?   @relation(fields: [empresaId], references: [id])
+  empresaId Int?
   Receita   Receita[]
 }
 
@@ -121,7 +121,7 @@ model PorcaoReceita {
   id         Int     @id @default(autoincrement())
   nome       String
   quantidade Float
-  empresa    Empresa @relation(fields: [empresaId], references: [id])
+  empresa    Empresa? @relation(fields: [empresaId], references: [id])
   empresaId  Int
 }
 
@@ -129,14 +129,14 @@ model PorcaoReceita {
 model Receita {
   id               Int              @id @default(autoincrement())
   nome             String
-  metodoPreparo    String
-  categoriaId      Int
-  rendimento       Float
-  unidadeId        Int
-  empresaId        Int
-  UnidadeMedida    UnidadeMedida    @relation(fields: [unidadeId], references: [id])
-  CategoriaReceita CategoriaReceita @relation(fields: [categoriaId], references: [id])
-  empresa          Empresa          @relation(fields: [empresaId], references: [id])
+  metodoPreparo    String?
+  categoriaId      Int?
+  rendimento       Float?
+  unidadeId        Int?
+  empresaId        Int?
+  UnidadeMedida    UnidadeMedida?    @relation(fields: [unidadeId], references: [id])
+  CategoriaReceita CategoriaReceita? @relation(fields: [categoriaId], references: [id])
+  empresa          Empresa?          @relation(fields: [empresaId], references: [id])
 }
 
 // Table for Audits and Logs
