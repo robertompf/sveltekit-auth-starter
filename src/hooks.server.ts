@@ -27,7 +27,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	event.locals.auth = auth.handleRequest(event);
 	if (event.locals?.auth) {
-		const { user } = await event.locals.auth.validateUser();
+		const { user } = await event.locals.auth.validate();
 		event.locals.user = user;
 		if (event.route.id?.startsWith('/(protected)')) {
 			if (!user) throw redirect(302, '/auth/sign-in');

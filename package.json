@@ -44,11 +44,11 @@
 	"dependencies": {
 		"@aws-sdk/client-ses": "^3.328.0",
 		"@axiomhq/axiom-node": "^0.12.0",
-		"@lucia-auth/adapter-prisma": "^2.0.0",
+		"@lucia-auth/adapter-prisma": "^3.0.2",
 		"@sentry/node": "^7.51.0",
 		"@sentry/svelte": "^7.51.0",
 		"@sveltejs/adapter-node": "^1.2.4",
-		"lucia-auth": "^1.5.0",
+		"lucia": "^2.7.2",
 		"lucide-svelte": "^0.214.0",
 		"nodemailer": "^6.9.2"
 	}
