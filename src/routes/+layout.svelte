@@ -13,7 +13,6 @@
 		Drawer,
 		Modal,
 		Toast,
-		dataTableHandler,
 		drawerStore
 	} from '@skeletonlabs/skeleton';
 	import Navigation from '$lib/components/navigation.svelte';
@@ -41,7 +40,13 @@
 <Toast position="tr" />
 <Modal />
 <Drawer>
-	<Navigation user={data.user} />
+	{#if $drawerStore.id === 'example-1'}
+		(show 'example-1' contents)
+	{:else if $drawerStore.id === 'example-2'}
+		(show 'example-2' contents)
+	{:else}
+		<Navigation user={data.user} />
+	{/if}
 </Drawer>
 
 <AppShell slotSidebarLeft="w-0 md:w-52 bg-surface-500/10">

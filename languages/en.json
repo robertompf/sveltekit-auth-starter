@@ -15,6 +15,7 @@
   "home": "Home",
   "protected": "Protected",
   "ingredients": "Ingredients",
+  "new": "New",
   "auth": {
     "password": {
       "reset": {
